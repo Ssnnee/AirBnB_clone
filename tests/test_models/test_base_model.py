@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """This module is the unittest of the BaseModel class"""
-
 from datetime import datetime
 from models.base_model import BaseModel
 import unittest
@@ -16,20 +15,23 @@ class TestBaseMadel(unittest.TestCase):
         self.assertIsInstance(model.created_at, datetime)
         self.assertIsInstance(model.updated_at, datetime)
 
-    def test_init_method_with_kwargs(self):
-        """This method tests the __init__ method with kwargs"""
-        attributes_to_test = {
-                'id': '123456',
-                'created_at': '2023-10-12T15:04:56.789',
-                'updated_at': '2023-10-12T15:04:58.789',
-                'random_attribute': 'random_value',
-                }
-        model = BaseModel(**attributes_to_test)
+    def test_init_with_kwargs(self):
+        """This method test if the __init__ method
+        initializes correctly with kwargs"""
+        datas = {
+                "id": "1sne3",
+                "created_at": "2023-10-12T20:00:00",
+                "updated_at": "2023-10-12T20:02:00",
+                "random_attri": "random_value",
+                "__class__": "notvalid"
+        }
 
-        self.assertEqual(model.id, '123456')
-        self.assertIsInstance(model.created_at, datetime)
-        self.assertIsInstance(model.updated_at, datetime)
-        self.assertEqual(model.random_attribute, 'random_value')
+        model = BaseModel(**datas)
+        self.assertEqual(model.id, "1sne3")
+        self.assertEqual(model.created_at.isoformat(), "2023-10-12T20:00:00")
+        self.assertEqual(model.updated_at.isoformat(), "2023-10-12T20:02:00")
+        self.assertEqual(model.random_attri, "random_value")
+        self.assertNotEqual(model.__class__.__name__, "notvalid")
 
     def test_save_method(self):
         """This method test if the save
