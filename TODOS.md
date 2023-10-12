@@ -2,7 +2,7 @@
 
 - [x] Tasks 0
 - [ ] Tasks 1
-- [ ] Tasks 2
+- [x] Tasks 2
 - [x] Tasks 3
 - [x] Tasks 4
 - [ ] Tasks 5
