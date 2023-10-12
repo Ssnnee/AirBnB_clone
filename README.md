@@ -24,6 +24,10 @@ Or simply
 ```
 ./script_name.py
 ```
+To run the unit test, be sure to be in the root of the project and run :
+```
+python3 -m unittest discover tests
+```
 
 ## Note 
 The "#!/usr/bin/python3" in first line of all files is called shebang or hashbang. It is used in Unix-like operating systems (such as Linux) to indicate the interpreter that should be used to execute the script.
