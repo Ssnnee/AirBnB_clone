@@ -2,7 +2,7 @@
 """ This module contains the mean model of all classes in this project"""
 import uuid
 from datetime import datetime
-import models
+import models from storage
 
 class BaseModel:
     """ This class is the model of all class"""
@@ -21,12 +21,12 @@ class BaseModel:
                 # the k !== "created_at" or k !=="updated_at" case
                     setattr(self, k, value)
         else:
-            models.storage.new(self)
+            storage.new(self)
 
     def save(self):
         """This method updates the public instance attribute updated_at"""
         self.updated_at = datetime.now()
-        model.storage.save()
+        storage.save()
 
     def to_dict(self):
         """This method returns a dictionary containing

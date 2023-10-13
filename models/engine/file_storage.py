@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This method contains the model for managing File Storage"""
 import json
-import os
-from models.base.model import BaseModel
+#--import os
+from models.base_model import BaseModel
 
 class FileStorage:
     """This class serializes instances to a JSON file

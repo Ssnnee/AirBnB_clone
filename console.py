@@ -36,11 +36,7 @@ class HBNBCommand(cmd.Cmd):
             ni= BaseModel.__classes[argSpl]()
             ni.save()
             print(ni.id)
-
-####
-
-
-
+#
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
