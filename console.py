@@ -62,7 +62,87 @@ class HBNBCommand(cmd.Cmd):
 
         del objDic[k]
         return (objSave)
+    
 
+
+    def do_show(self, arg):
+        """display str representation of an inst."""
+        className= arg_list[0]
+        argList = pars(arg)
+        instId = arg_list[1]
+        if len(argList) == 0:
+            print("** class name missing **")
+            return
+        if className not in BaseModel.__subclasses__():
+            print("** class doesn't exist **")
+            return
+        if len(argList) == 1:
+            print("** instance id missing **")
+            return
+        k = "{}.{}".format(className, instId)
+        storedObj = storage.all()
+        if k in storedObj:
+            print(storedObj)
+        else:
+            print("** no instance found **")
+    
+
+    def do_all(self, arg):
+        """Prints all string representation of all inst."""
+        storedObj = storage.all()
+        argSpl = arg.split()
+        if argSpl:
+            className = args[0]
+            if className not in BaseModel.__subclasses__():
+                print("** class doesn't exist **")
+                return
+            insts [x for x in storedObj.values() if x.__class__.__name__ == className]
+            if not insts:
+                print("** no instance found **")
+            else:
+                for i in insts:
+                    print(i)
+        else:
+            for i in storedObj.values():
+                print(i)
+
+    def do_update(seld, arg):
+        """Updates an instance based on the class name and id."""
+         argSpl = argSpl.split()
+
+    if len(argSpl) == 0:
+        print("** class name missing **")
+        return
+
+    className = argSpl[0]
+
+    if className not in HBNBCommand.__classes:
+        print("** class doesn't exist **")
+        return
+
+    if len(argSpl) == 1:
+        print("** instance id missing **")
+        return
+
+    instId = argSpl[1]
+    storedObj = storage.all()
+    k = f"{className}.{instId}"
+
+    if k not in storedObj:
+        print("** no instance found **")
+        return
+
+    if len(argSpl) < 4:
+        print("** attribute name or value missing **")
+        return
+
+    attName = argSpl[2]
+    attVal = argSpl[3]
+    x = storedObj[k]
+
+    if attName not in ["id", "created_at", "updated_at"]:
+        setattr(x, attName, attVal)
+        x.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
