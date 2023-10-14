@@ -3,7 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
-
+import argparse
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -110,39 +110,37 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id."""
          argSpl = argSpl.split()
 
-    if len(argSpl) == 0:
-        print("** class name missing **")
-        return
+        if len(argSpl) == 0:
+            print("** class name missing **")
+            return
 
-    className = argSpl[0]
+        className = argSpl[0]
+        if className not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
 
-    if className not in HBNBCommand.__classes:
-        print("** class doesn't exist **")
-        return
+        if len(argSpl) == 1:
+            print("** instance id missing **")
+            return
 
-    if len(argSpl) == 1:
-        print("** instance id missing **")
-        return
+        instId = argSpl[1]
+        storedObj = storage.all()
+        k = f"{className}.{instId}"
+        if k not in storedObj:
+            print("** no instance found **")
+            return
 
-    instId = argSpl[1]
-    storedObj = storage.all()
-    k = f"{className}.{instId}"
+        if len(argSpl) < 4:
+            print("** attribute name or value missing **")
+            return
 
-    if k not in storedObj:
-        print("** no instance found **")
-        return
+        attName = argSpl[2]
+        attVal = argSpl[3]
+        x = storedObj[k]
 
-    if len(argSpl) < 4:
-        print("** attribute name or value missing **")
-        return
-
-    attName = argSpl[2]
-    attVal = argSpl[3]
-    x = storedObj[k]
-
-    if attName not in ["id", "created_at", "updated_at"]:
-        setattr(x, attName, attVal)
-        x.save()
+        if attName not in ["id", "created_at", "updated_at"]:
+            setattr(x, attName, attVal)
+            x.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
