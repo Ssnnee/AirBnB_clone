@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This method contains the model for managing File Storage"""
 import json
-#--import os
-from models.base_model import BaseModel
+import os
+
 
 class FileStorage:
     """This class serializes instances to a JSON file
@@ -13,43 +13,46 @@ class FileStorage:
 
     def all(self):
         """This method returns the dictionary __objects"""
-
         return self.__objects
 
     def new(self, obj):
         """This method sets in __objects the obj with key <obj
         class name>.id"""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
 
-    
+        class_name = obj.__class__.__name__
+        class_id = obj.id
+        self.__objects[f"{class_name}.{class_id}"] = obj
 
     def save(self):
-        """This method serializes __objects to the
-        JSON file (path: __file_path)"""
-        SerializeObj = {}
-        for key, obj in self.__objects.items():
-            SerializeObj[key] = obj.to.dict()
-        with open(self.__file_path, 'w', encoding= 'utf-8') as file:
-            json.dump(SerializeObj, file, indent= 4)
-
+        """ This method serializes __objects to the
+        JSON file (path: __file_path)
+        """
+        try:
+            serialized_object = {
+                    k: v.to_dict() for k, v in self.__objects.items()
+            }
+            with open(self.__file_path, mode='w', encoding="utf-8") as file:
+                file.write(json.dumps(serialized_object))
+        except Exception:
+            pass
 
     def reload(self):
-        """This method deserializes the JSON file to __objects"""
-        try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                #loading the Json data from the file
-                ObjDic = json.load(file)
-                for key, val in ObjDic.items():
-                    #Extracting classname form dict
-                    ClassName = val.get("__class__")
-                    if ClassName:
-                        #it removes the class from the dict
-                        del val["__class__"]
-                        ObjClass= class_mapping.get(ClassName)
-                        if ObjClass:
-                            obj = ObjClass(**val)
-                            #adding the new obj to storage
-                            self.new(obj)
-        except FileNotFoundError:
+        """This method deserializes the JSON file to __objects """
+        # This import avoid circular import
+        from models.base_model import BaseModel
+
+        CLASSES = {
+            'BaseModel': BaseModel,
+            }
+        if not os.path.exists(self.__file_path):
             return
+
+        try:
+            with open(self.__file_path, 'r') as file:
+                objects = json.load(file)
+                for k, serialized_object in objects.items():
+                    class_name = serialized_object['__class__']
+                    clas = CLASSES[class_name]
+                    self.__objects[k] = clas(**serialized_object)
+        except json.JSONDecodeError:
+            pass
