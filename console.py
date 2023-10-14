@@ -24,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """creating new instance of BaseModel"""
+        """Creating new instance of BaseModel"""
         argSpl = arg.split()
         if len(argSpl) == 0:
             print("** class name missing **")
@@ -36,7 +36,33 @@ class HBNBCommand(cmd.Cmd):
             ni= BaseModel.__classes[argSpl]()
             ni.save()
             print(ni.id)
-#
+            return
+    
+    def do_destory(self,arg):
+        """Deletes an instance based on the class name and id"""
+        className = args[0]
+        argSpl = arg.split()
+        if not argSpl:
+            print("** class name missing **")
+            return
+        if className not in BaseModel.__subclasses__():
+            print("** class doesn't exist **")
+            return
+    #arg with least 2 comp
+        if len(argSpl) < 2:
+            print("** instance id missing **")
+            return
+        instId = arg[1]
+        k= f"{className}.{instId}"
+        objDic = storage.all()
+        objSave = storage.save()
+        if k not in objDic:
+            print("** no instance found **")
+            return
+
+        del objDic[k]
+        return (objSave)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
