@@ -38,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
             print(ni.id)
             return
     
-    def do_destory(self,arg):
+    def do_destory(self, arg):
         """Deletes an instance based on the class name and id"""
         className = args[0]
         argSpl = arg.split()
@@ -106,8 +106,8 @@ class HBNBCommand(cmd.Cmd):
             for i in storedObj.values():
                 print(i)
 
-   def do_update(self, argSpl):
-    """Updates an instance based on class name and id."""
+    def do_update(self, argSpl):
+        """Updates an instance based on class name and id."""
     
         parser = argparse.ArgumentParser(description="Update an instance")
         parser.add_argument("className", help="Class name")
