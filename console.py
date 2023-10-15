@@ -96,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
             if className not in BaseModel.__subclasses__():
                 print("** class doesn't exist **")
                 return
-            insts [x for x in storedObj.values() if x.__class__.__name__ == className]
+            insts = [x for x in storedObj.values() if x.__class__.__name__ == className]
             if not insts:
                 print("** no instance found **")
             else:
@@ -127,6 +127,9 @@ class HBNBCommand(cmd.Cmd):
             return
         if className not in HBNBCommand.__classes:
             print("** class doesn't exist **")
+            return
+        if not instId:
+            print("** instance id missing **")
             return
 
         if k not in storedObj:
