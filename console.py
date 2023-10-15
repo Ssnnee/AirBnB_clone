@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """display str representation of an inst."""
         className= arg_list[0]
-        argList = pars(arg)
+        argList = parse(arg)
         instId = arg_list[1]
         if len(argList) == 0:
             print("** class name missing **")
@@ -106,41 +106,46 @@ class HBNBCommand(cmd.Cmd):
             for i in storedObj.values():
                 print(i)
 
-    def do_update(seld, arg):
-        """Updates an instance based on the class name and id."""
-         argSpl = argSpl.split()
-
-        if len(argSpl) == 0:
+   def do_update(self, argSpl):
+    """Updates an instance based on class name and id."""
+    
+        parser = argparse.ArgumentParser(description="Update an instance")
+        parser.add_argument("className", help="Class name")
+        parser.add_argument("instId", help="Instance ID")
+        parser.add_argument("attName", help="Attribute name")
+        parser.add_argument("attVal", help="Attribute value")
+        argSpl = parser.parse_args(argSpl.split())
+        className = argSpl.className
+        instId = argSpl.instId
+        attName = argSpl.attName
+        attVal = argSpl.attVal
+        storedObj = storage.all()
+        k = f"{className}.{instId}"
+        
+        if not className:
             print("** class name missing **")
             return
-
-        className = argSpl[0]
         if className not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
 
-        if len(argSpl) == 1:
-            print("** instance id missing **")
-            return
-
-        instId = argSpl[1]
-        storedObj = storage.all()
-        k = f"{className}.{instId}"
         if k not in storedObj:
             print("** no instance found **")
             return
-
-        if len(argSpl) < 4:
-            print("** attribute name or value missing **")
+        x = storedObj[k]
+        if not attName:
+            print("** attribute name missing **")
             return
 
-        attName = argSpl[2]
-        attVal = argSpl[3]
-        x = storedObj[k]
+        if not attVal:
+            print("** value missing **")
+            return
 
         if attName not in ["id", "created_at", "updated_at"]:
             setattr(x, attName, attVal)
             x.save()
+        else:
+            print(f"** cannot update {attName} **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
