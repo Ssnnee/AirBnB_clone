@@ -87,7 +87,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
-
     def do_all(self, arg):
         """Prints all string representation of all inst."""
         storedObj = storage.all()
