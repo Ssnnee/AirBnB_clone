@@ -8,6 +8,6 @@
 - [ ] Tasks 5
 - [x] Tasks 6
 - [x] Tasks 7
-- [ ] Tasks 8
+- [x] Tasks 8
 - [ ] Tasks 9
 - [ ] Tasks 10
