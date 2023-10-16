@@ -40,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         ni.save()
         print(ni.id)
 
-    def do_destory(self, arg):
+    def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         className = arg[0]
         argSpl = arg.split()
