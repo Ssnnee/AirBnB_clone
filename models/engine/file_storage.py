@@ -55,18 +55,15 @@ class FileStorage:
             'Amenity': Amenity,
             'State': State
             }
-
         if not os.path.exists(self.__file_path):
-           return 
-       else:
-           pass
-
-        try:
-            with open(self.__file_path, 'r') as file:
-                objects = json.load(file)
+            try:
+                with open(self.__file_path, 'r') as file:
+                    objects = json.load(file)
                 for k, serialized_object in objects.items():
                     class_name = serialized_object['__class__']
                     clas = CLASSES[class_name]
                     self.__objects[k] = clas(**serialized_object)
-        except json.JSONDecodeError:
+            except json.JSONDecodeError:
+                pass
+        else:
             pass
