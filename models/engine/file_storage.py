@@ -57,7 +57,9 @@ class FileStorage:
             }
 
         if not os.path.exists(self.__file_path):
-           pass 
+           return 
+       else:
+           pass
 
         try:
             with open(self.__file_path, 'r') as file:
