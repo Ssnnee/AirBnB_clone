@@ -38,6 +38,7 @@ class FileStorage:
 
     def reload(self):
         """This method deserializes the JSON file to __objects """
+
         # This import avoid circular import
         from models.base_model import BaseModel
         from models.user import User
