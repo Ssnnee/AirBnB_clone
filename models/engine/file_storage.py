@@ -40,9 +40,11 @@ class FileStorage:
         """This method deserializes the JSON file to __objects """
         # This import avoid circular import
         from models.base_model import BaseModel
+        from models.user import User
 
         CLASSES = {
             'BaseModel': BaseModel,
+            'User': User
             }
         if not os.path.exists(self.__file_path):
             return
