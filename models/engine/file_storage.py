@@ -41,11 +41,20 @@ class FileStorage:
         # This import avoid circular import
         from models.base_model import BaseModel
         from models.user import User
+        from models.city import City
+        from models.place import Place
+        from models.amenity import Amenity
+        from models.state import State
 
         CLASSES = {
             'BaseModel': BaseModel,
-            'User': User
+            'User': User,
+            'City': City,
+            'Place': Place,
+            'Amenity': Amenity,
+            'State': State
             }
+
         if not os.path.exists(self.__file_path):
             return
 
