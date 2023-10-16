@@ -57,7 +57,7 @@ class FileStorage:
             }
 
         if not os.path.exists(self.__file_path):
-            return
+           pass 
 
         try:
             with open(self.__file_path, 'r') as file:
@@ -68,4 +68,3 @@ class FileStorage:
                     self.__objects[k] = clas(**serialized_object)
         except json.JSONDecodeError:
             pass
-        pass
