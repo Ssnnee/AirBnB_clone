@@ -65,5 +65,3 @@ class FileStorage:
                     self.__objects[k] = clas(**serialized_object)
             except json.JSONDecodeError:
                 pass
-        else:
-            pass
