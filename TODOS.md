@@ -8,6 +8,6 @@
 - [ ] Tasks 5
 - [x] Tasks 6
 - [x] Tasks 7
-- [x] Tasks 8
+- [x] Tasks 8 (Please update the console for this tasks)
 - [ ] Tasks 9
 - [ ] Tasks 10
