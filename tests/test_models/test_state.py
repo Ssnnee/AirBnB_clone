@@ -6,7 +6,7 @@ import unittest
 
 class TestState(unittest.TestCase):
     """This class is the unit test for State class"""
-    
+
     def test_default_attributes(self):
         """This method test the default attributes"""
         state = State()
