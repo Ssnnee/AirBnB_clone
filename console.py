@@ -35,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
         className = argSpl[0]
         if className not in BaseModel.__subclasses__():
             print("** class doesn't exist **")
-            return        
+            return
         ni = BaseModel()
         ni.save()
         print(ni.id)
@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         k = "{}.{}".format(className, instId)
         storedObj = storage.all()
 
-        if k  in storedObj:
+        if k in storedObj:
             print(storedObj[k])
         else:
             print("** no instance found **")
