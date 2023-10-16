@@ -2,8 +2,23 @@
 """ Console Module. """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.state import State
 from models import storage
 import argparse
+
+
+CLASSES = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'City': City,
+    'Place': Place,
+    'Amenity': Amenity,
+    'State': State
+    }
 
 
 class HBNBCommand(cmd.Cmd):
@@ -27,58 +42,44 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creating new instance of BaseModel"""
+        """Creates new instance of BaseModel"""
+
         argSpl = arg.split()
+
         if len(argSpl) == 0:
             print("** class name missing **")
             return
-        className = argSpl[0]
-        if className not in BaseModel.__subclasses__():
+        class_name = argSpl[0]
+        if class_name not in CLASSES:
             print("** class doesn't exist **")
             return
-        ni = BaseModel()
-        ni.save()
-        print(ni.id)
-
-    def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id"""
-        className = arg[0]
-        argSpl = arg.split()
-        if not argSpl:
-            print("** class name missing **")
-            return
-        if className not in BaseModel.__subclasses__():
-            print("** class doesn't exist **")
-            return
-        if len(argSpl) < 2:
-            print("** instance id missing **")
-            return
-        instId = argSpl[1]
-        k = f"{className}.{instId}"
-        objDic = storage.all()
-        objSave = storage.save()
-        if k not in objDic:
-            print("** no instance found **")
-            return
-        else:
-            del objDic[k]
-            return (objSave)
+        try:
+            ni = CLASSES[class_name]()
+            ni.save()
+            print(ni.id)
+        except Exception:
+            pass
 
     def do_show(self, arg):
-        """Show the str representation of an instance."""
-        argSpl = arg.split()
-        if len(argSpl) == 0:
+        """display str representation of an inst."""
+
+        argList = arg.split()
+
+        if len(argList) == 0:
             print("** class name missing **")
             return
-        className = argSpl[0]
-        if className not in BaseModel.__subclasses__():
+
+        className = argList[0]
+
+        if className not in CLASSES:
             print("** class doesn't exist **")
             return
-        if len(argSpl) < 2:
+
+        if len(argList) == 1:
             print("** instance id missing **")
             return
 
-        instId = argSpl[1]
+        instId = argList[1]
         k = "{}.{}".format(className, instId)
         storedObj = storage.all()
 
@@ -87,13 +88,46 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id"""
+
+        argSpl = arg.split()
+
+        if not argSpl:
+            print("** class name missing **")
+            return
+
+        className = argSpl[0]
+
+        if className not in CLASSES:
+            print("** class doesn't exist **")
+            return
+
+        if len(argSpl) < 2:
+            print("** instance id missing **")
+            return
+
+        instId = argSpl[1]
+        k = f"{className}.{instId}"
+        objDic = storage.all()
+        objSave = storage.save()
+
+        if k not in objDic:
+            print("** no instance found **")
+            return
+
+        del objDic[k]
+        return (objSave)
+
     def do_all(self, arg):
         """Prints all string representation of all inst."""
+
         storedObj = storage.all()
         argSpl = arg.split()
+
         if argSpl:
-            className = arg[0]
-            if className not in BaseModel.__subclasses__():
+            className = argSpl[0]
+            if className not in CLASSES:
                 print("** class doesn't exist **")
                 return
             insts = [
@@ -111,6 +145,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, argSpl):
         """Updates an instance based on class name and id."""
+
         parser = argparse.ArgumentParser(description="Update an instance")
         parser.add_argument("className", help="Class name")
         parser.add_argument("instId", help="Instance ID")
@@ -127,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
         if not className:
             print("** class name missing **")
             return
-        if className not in BaseModel.__classes:
+        if className not in CLASSES:
             print("** class doesn't exist **")
             return
         if not instId:
