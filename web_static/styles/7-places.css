@@ -15,3 +15,9 @@
     font-size: 30px;
     text-align: center;
 }
+
+.art {
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
