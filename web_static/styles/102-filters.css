@@ -1,0 +1,125 @@
+.filters {
+    background-color: white;
+    height: 70px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    justify-content: start;
+    text-align: right;
+    align-items: center;
+}
+
+.filters button {
+    font-size: 18px;
+    background-color: #FF5A5F;
+    color: #FFFFFF;
+    height: 48px;
+    width: 20%;
+    border: none;
+    border-radius: 4px;
+    position: relative;
+    margin-right: 30px;
+    left: 273px;
+}
+
+.filters button:hover{
+    opacity: 0.9;
+}
+
+.locations{
+    border-right: 1px solid #DDDDDD;
+}
+.filters .amenities{
+    position: relative;
+}
+.filters .locations,
+.filters .amenities
+{
+    height: 100%;
+    width: 25%;
+    text-align: left;
+}
+
+.filters h3{
+    font-weight: 600;
+    line-height: 1px;
+    position: relative;
+    top: 10%;
+    margin-left: 40px;
+}
+h4{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1px;
+    position: relative;
+    top: 10%;
+    margin-left: 40px;
+}
+
+.popover{
+    display: none;
+    width: 100%;
+    background-color: #FAFAFA;
+    position: relative;
+    left: -1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    top: 14px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 4px;
+}
+
+.popover h2{
+    font-size: 16px;
+    line-height: 1px;
+}
+
+ul{
+    list-style: none;
+    padding: 0px;
+    text-align: left;
+}
+
+li{
+    margin-left: 40px;
+}
+
+li h2{
+    margin-left: -20px;
+}
+
+.filters .locations:hover .popover{
+    display: block;
+}
+.filters .amenities:hover .popover{
+    display: block;
+}
+
+@media (max-width: 920px) {
+    .filters button {
+        left: 200px;
+    }
+}
+
+@media (max-width: 690px) {
+    .filters {
+        position: relative;
+    }
+    .filters button {
+        position: absolute;
+        top: 100px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+
+    .filters {
+        justify-content: space-between;
+    }
+
+    .filters .locations,
+    .filters .amenities {
+        width: 100%;
+    }
+
+}
