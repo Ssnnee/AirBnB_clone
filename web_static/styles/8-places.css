@@ -11,6 +11,11 @@
     border-radius: 4px;
 }
 
+.place {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .place h2 {
     font-size: 30px;
     text-align: center;
@@ -32,7 +37,7 @@
     border-radius: 50%;
     padding: 10px;
     position: relative;
-    left: 300px;
+    left: 150px;
     bottom: 50px;
 }
 .price_by_night span{
@@ -50,14 +55,16 @@
     border-top: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
     height: 80px;
+    width: 390px;
     margin-top: -40px;
     display: flex;
+    justify-content: center ;
     align-items: center;
+    gap: 10px;
 }
 
 .max_guest, .number_rooms, .number_bathrooms {
     width: 100px;
-    margin-right: 20px;
     text-align: center;
 }
 
@@ -85,6 +92,8 @@
 }
 
 .user {
+    position: relative;
+    margin-left: -280px;
     margin-top: 10px;
 }
 
